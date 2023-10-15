@@ -15,19 +15,19 @@ attended by many users. Events take place at a specific date and at a location
 
 ```ruby
 class Event
-  has_many :attendants
-  has_many :attendees, through: :attendants, source: :attendee
+  has_many :tickets
+  has_many :attendees, through: :tickets, source: :attendee
   belongs_to :creator, class_name: "User", foreign_key: "creator_id"
 end
 
-class Attendant
+class Ticket
   belongs_to :event
   belongs_to :attendee, class_name: "User"
 end
 
 class User
-  has_many :attendants
-  has_many :events, through: :attendants
+  has_many :tickets
+  has_many :events, through: :tickets
   has_many :created_events, class_name: "Event", foreign_key: "creator_id"
 end
 ```
