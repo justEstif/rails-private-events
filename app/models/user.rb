@@ -4,4 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validates :name, presence: true, length: { minimum: 3 }
+
+  has_many :created_events, class_name: "Event", foreign_key: "creator_id"
 end

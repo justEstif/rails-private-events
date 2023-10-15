@@ -5,3 +5,13 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+# Create 10 events
+10.times do |i|
+  Event.create(
+    name: "Event #{i + 1}",
+    date: Time.now + i.days,
+    location: "Location #{i + 1}",
+    creator_id: 1
+  )
+end
