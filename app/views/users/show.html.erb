@@ -1,9 +1,48 @@
-<h1>User's created events</h1>
-<% @events.each do |event| %>
-  <%= event.name %>
-  <br/>
-  <%= event.date.strftime("%d %b %Y, %I:%M %p") %>
-  <br/>
-  <%= event.location %>
-  <br/>
-<% end %>
+<p>User's created events</p>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Location</th>
+  </tr>
+  <% @events.each do |event| %>
+    <tr>
+      <td><%= event.name %></td>
+      <td><%= event.date.strftime("%d %b %Y, %I:%M %p") %></td>
+      <td><%= event.location %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p>Attended events</p>
+<p>Past</p>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Location</th>
+  </tr>
+  <% @attended_events.where("date < ?", Time.now).each do |event| %>
+    <tr>
+      <td><%= event.name %></td>
+      <td><%= event.date.strftime("%d %b %Y, %I:%M %p") %></td>
+      <td><%= event.location %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p>Upcoming</p>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Location</th>
+  </tr>
+  <% @attended_events.where("date >= ?", Time.now).each do |event| %>
+    <tr>
+      <td><%= event.name %></td>
+      <td><%= event.date.strftime("%d %b %Y, %I:%M %p") %></td>
+      <td><%= event.location %></td>
+    </tr>
+  <% end %>
+</table>

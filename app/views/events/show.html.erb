@@ -4,3 +4,10 @@
 <br/>
 <%= @event.location %>
 <br/>
+<p>Attendees</p>
+<ul>
+  <% @event.attendees.each do |attendee| %>
+    <li><%= attendee.name %></li>
+    <br/>
+  <% end %>
+</ul>
