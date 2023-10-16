@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  resources :tickets
   devise_for :users
-  resources :events
   resources :users
+  resources :events do
+    resources :tickets, only: [:new, :create, :destroy]
+  end
 
-  root 'events#index'
+  root "events#index"
 end

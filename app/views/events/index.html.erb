@@ -7,4 +7,9 @@
   <br/>
   <%= event.location %>
   <br/>
+  <% if user_signed_in? %>
+    <%= link_to "Attend Event", new_event_ticket_path(event) %>
+  <% else %>
+    <%= link_to "Log in to Attend", new_user_session_path %>
+  <% end %>
 <% end %>

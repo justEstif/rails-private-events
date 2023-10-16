@@ -1,0 +1,7 @@
+<h1>Purchase Ticket</h1>
+
+<%= form_with model: @ticket, url: event_tickets_path(@event) do |form| %>
+  <div class="actions">
+    <%= form.submit "Purchase Ticket", class: "btn btn-primary" %>
+  </div>
+<% end %>
