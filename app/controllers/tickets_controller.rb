@@ -1,18 +1,30 @@
 class TicketsController < ApplicationController
   def new
     @event = Event.find(params[:event_id])
-    @ticket = Ticket.new
+    if @event.attendees.include?(current_user)
+      flash[:error] = "You are already attending this event."
+      redirect_to root_path
+    else
+      @ticket = Ticket.new
+    end
   end
 
   def create
     @event = Event.find(params[:event_id])
-    # BUG: unknown attribute 'user_id' for Ticket.
-    @ticket = current_user.tickets.build(event: @event)
 
-    if @ticket.save
-      # Ticket purchase was successful
+    if current_user == @event.creator
+      flash[:error] = "You cannot purchase a ticket for your own event."
+      redirect_to root_path
     else
-      # Handle validation errors or other issues
+      @ticket = current_user.tickets.build(event: @event)
+
+      if @ticket.save
+        flash[:success] = "Ticket purchase was successful."
+        redirect_to root_path
+      else
+        flash[:error] = "Error purchasing the ticket."
+        render "new"
+      end
     end
   end
 end

@@ -1,48 +1,44 @@
-<p>User's created events</p>
+<h1>My Events</h1>
 <table>
   <tr>
     <th>Name</th>
     <th>Date</th>
     <th>Location</th>
+    <th>Action</th>
   </tr>
   <% @events.each do |event| %>
     <tr>
       <td><%= event.name %></td>
       <td><%= event.date.strftime("%d %b %Y, %I:%M %p") %></td>
       <td><%= event.location %></td>
+      <td>
+        <% if user_signed_in? %>
+          <% if event.creator == current_user %>
+            Organizer
+          <% else %>
+            <%= link_to "Attend Event", new_event_ticket_path(event) %>
+          <% end %>
+        <% else %>
+          <%= link_to "Log in to Attend", new_user_session_path %>
+        <% end %>
+      </td>
     </tr>
   <% end %>
-</table>
 
-<p>Attended events</p>
-<p>Past</p>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Date</th>
-    <th>Location</th>
-  </tr>
-  <% @attended_events.past.each do |event| %>
-    <tr>
-      <td><%= event.name %></td>
-      <td><%= event.date.strftime("%d %b %Y, %I:%M %p") %></td>
-      <td><%= event.location %></td>
-    </tr>
-  <% end %>
-</table>
-
-<p>Upcoming</p>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Date</th>
-    <th>Location</th>
-  </tr>
   <% @attended_events.upcoming.each do |event| %>
     <tr>
       <td><%= event.name %></td>
       <td><%= event.date.strftime("%d %b %Y, %I:%M %p") %></td>
       <td><%= event.location %></td>
+      <td>Attending</td>
+    </tr>
+  <% end %>
+  <% @attended_events.past.each do |event| %>
+    <tr>
+      <td><%= event.name %></td>
+      <td><%= event.date.strftime("%d %b %Y, %I:%M %p") %></td>
+      <td><%= event.location %></td>
+      <td>Attended</td>
     </tr>
   <% end %>
 </table>

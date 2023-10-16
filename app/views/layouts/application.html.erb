@@ -5,23 +5,40 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@next/css/pico.min.css"
+    />
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <% if user_signed_in? %>
-      <div>
-        Welcome
-        <%= current_user.email %>
-      </div>
-      <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= button_to "Sign in", new_user_session_path %>
-    <% end %>
-    <%= yield %>
+    <nav class="container">
+      <ul>
+        <li><%= link_to "Private Events", root_path %></li>
+      </ul>
+      <ul>
+        <% if user_signed_in? %>
+          <li><%= link_to "My Events", current_user %></li>
+          <li><%= button_to "Sign out", destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li><%= button_to "Sign in", new_user_session_path %>
+        <% end %>
+      </ul>
+    </nav>
+
+
+    <div class="container">
+      <% flash.each do |type, msg| %>
+        <div><%= msg %></div>
+      <% end %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+    </div>
+
+    <main class="container">
+      <%= yield %>
+    </main>
   </body>
 </html>

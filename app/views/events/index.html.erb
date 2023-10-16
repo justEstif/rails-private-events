@@ -1,15 +1,32 @@
 <h1>Events</h1>
 
-<% @events.each do |event| %>
-  <%= event.name %>
-  <br/>
-  <%= event.date.strftime("%d %b %Y, %I:%M %p") %>
-  <br/>
-  <%= event.location %>
-  <br/>
-  <% if user_signed_in? %>
-    <%= link_to "Attend Event", new_event_ticket_path(event) %>
-  <% else %>
-    <%= link_to "Log in to Attend", new_user_session_path %>
-  <% end %>
-<% end %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td><%= event.name %></td>
+        <td><%= event.date.strftime("%d %b %Y, %I:%M %p") %></td>
+        <td><%= event.location %></td>
+        <td>
+          <% if user_signed_in? %>
+            <% if event.creator == current_user %>
+              Organizer
+            <% else %>
+              <%= link_to "Attend Event", new_event_ticket_path(event) %>
+            <% end %>
+          <% else %>
+            <%= link_to "Log in to Attend", new_user_session_path %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
