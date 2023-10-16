@@ -22,7 +22,7 @@
     <th>Date</th>
     <th>Location</th>
   </tr>
-  <% @attended_events.where("date < ?", Time.now).each do |event| %>
+  <% @attended_events.past.each do |event| %>
     <tr>
       <td><%= event.name %></td>
       <td><%= event.date.strftime("%d %b %Y, %I:%M %p") %></td>
@@ -38,7 +38,7 @@
     <th>Date</th>
     <th>Location</th>
   </tr>
-  <% @attended_events.where("date >= ?", Time.now).each do |event| %>
+  <% @attended_events.upcoming.each do |event| %>
     <tr>
       <td><%= event.name %></td>
       <td><%= event.date.strftime("%d %b %Y, %I:%M %p") %></td>
